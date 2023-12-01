@@ -1,7 +1,7 @@
 const initialState = {
     page: 1,
     totalData: 0,
-    perPage: 4,
+    perPage: 10,
 }
 
 const paginationReducer = (state = initialState, action) => {

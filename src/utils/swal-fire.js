@@ -20,11 +20,11 @@ export const SwalFire = (type, text) => {
 }
 
 
-export const SwalLoading = () => {
+export const SwalLoading = (title = 'Loading...') => {
     Swal.fire({
         toast: true,
         position: 'top-end',
-        title: 'Loading...',
+        title,
         showConfirmButton: false,
         allowEscapeKey: false,
         didOpen: () => {

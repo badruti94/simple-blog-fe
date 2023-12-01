@@ -1,8 +1,8 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button, Card, CardBody, Form, FormGroup, Input, Label } from "reactstrap"
 import Layout from "../../components/layout"
-import { useState } from "react"
 import { API } from '../../config/api'
-import { useNavigate } from "react-router-dom"
 import { SwalLoading, SwalFire } from '../../utils/swal-fire'
 
 const Login = () => {
@@ -23,6 +23,8 @@ const Login = () => {
             localStorage.setItem('login', true)
             localStorage.setItem('token', token)
             localStorage.setItem('user_id', data.user_id)
+            localStorage.setItem('username', data.username)
+            localStorage.setItem('name', data.name)
             localStorage.setItem('role', data.role)
 
             Swal.close()

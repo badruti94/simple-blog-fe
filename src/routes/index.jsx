@@ -8,6 +8,9 @@ import PostDetail from '../pages/post-detail'
 import AuthRoute from '../outlets/AuthRoute'
 import Post from '../pages/post'
 import PostAdd from '../pages/post-add'
+import CommentEdit from '../components/comment-edit'
+import ReplyEdit from '../components/reply-edit'
+import PostSaved from '../pages/post-saved'
 
 
 const router = createBrowserRouter([
@@ -43,6 +46,18 @@ const router = createBrowserRouter([
             {
                 path: '/post/edit/:id',
                 element: <PostAdd />,
+            },
+            {
+                path: '/post/saved',
+                element: <PostSaved />,
+            },
+            {
+                path: '/comment/:id/edit',
+                element: <CommentEdit />,
+            },
+            {
+                path: '/reply/:id/edit',
+                element: <ReplyEdit />,
             },
         ],
     }

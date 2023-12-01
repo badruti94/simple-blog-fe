@@ -1,13 +1,14 @@
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "reactstrap"
-import { API, getConfig } from "../../config/api"
 import { confirmAlert } from 'react-confirm-alert';
+import { API, getConfig } from "../../config/api"
+import {formatDate} from '../../utils/format'
 
 const PostListItemTable = ({ data, getData }) => {
     const navigate = useNavigate()
 
-    const { id, title} = data
+    const { id, title, view, createdAt, publish } = data
     const handleEdit = async () => {
         try {
             navigate('/post/edit/' + id)
@@ -47,23 +48,26 @@ const PostListItemTable = ({ data, getData }) => {
             console.log(error);
         }
     }
-    const handleDetail = async () => {
-        try {
-            navigate('/post/' + id)
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     return (
         <tr>
+            <td className='fw-bold '>
+                <Link
+                    className='text-decoration-none'
+                    to={'/post/' + id}
+                >
+                    {title}{!publish && '(draft)'}
+                </Link>
+            </td>
+            <td className='text-center'>
+                {view}
+            </td>
             <td>
-                {title}
+                {formatDate(createdAt)}
             </td>
             <td className="text-center" >
                 <Button onClick={handleEdit} className="me-2" color="warning" >Edit</Button>
                 <Button onClick={handleDelete} className="me-2" color="danger">Delete</Button>
-                <Button onClick={handleDetail} className="me-2" color="primary">Detail</Button>
             </td>
         </tr>
     )

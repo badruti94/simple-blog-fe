@@ -1,30 +1,31 @@
-import { Button, Card, CardBody, Table } from "reactstrap"
+import { useEffect, useState } from "react"
+import { Card, CardBody, Table } from "reactstrap"
+import { useDispatch, useSelector } from "react-redux"
 import PaginationComponent from "../../components/pagination"
 import Layout from "../../components/layout"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
 import { SwalLoading } from "../../utils/swal-fire"
-import { API } from "../../config/api"
+import { API, getConfig } from "../../config/api"
 import { updatePage, updateTotalData } from "../../config/redux/action"
 import PostListItemTable from "../../components/post-list-item-table"
 
 const Post = () => {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const [posts, setPosts] = useState([])
     const { page, perPage } = useSelector(state => state.paginationReducer)
 
     const getData = async () => {
         const Swal = SwalLoading()
-        const result = await API.get(`/post?page=${page}&perPage=${perPage}`)
+        const config  = await getConfig()
+        const result = await API.get(`/post/dashboard?page=${page}&perPage=${perPage}`, config)
         Swal.close()
         setPosts(result.data.data)
         dispatch(updateTotalData(parseInt(result.data.total_data)))
     }
 
     useEffect(() => {
-        dispatch(updatePage(1))
+        return () => {
+            dispatch(updatePage(1))
+        }
     }, [])
 
     useEffect(() => {
@@ -39,12 +40,10 @@ const Post = () => {
         <Layout>
             <Card
                 className="mx-auto"
-                style={{ width: '50rem' }}
+                style={{ maxWidth: '50rem' }}
             >
                 <CardBody
                 >
-
-                    <Button color="primary" onClick={() => navigate('/post/add')}>Add Post</Button>
                     <Table
                     >
                         <thead>
@@ -52,7 +51,13 @@ const Post = () => {
                                 <th>
                                     Title
                                 </th>
-                                <th className="text-center">
+                                <th>
+                                    View
+                                </th>
+                                <th width='120'>
+                                    Date
+                                </th>
+                                <th className="text-center" width="200">
                                     Aksi
                                 </th>
                             </tr>

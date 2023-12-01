@@ -21,6 +21,8 @@ const Header = () => {
         navigate('/login')
     }
 
+    const name = localStorage.getItem('name')
+
     useEffect(() => {
         const isLogin = localStorage.getItem('login')
 
@@ -34,7 +36,9 @@ const Header = () => {
         } else {
             navItemLink = [
                 { to: '/', title: 'Home', onClick: () => { } },
+                { to: '/post/saved', title: 'Saved Post', onClick: () => { } },
                 { to: '/post', title: 'Post', onClick: () => { } },
+                { to: '/post/add', title: 'Create Post', onClick: () => { } },
                 { to: null, title: 'Logout', onClick: handleLogout },
             ]
         }
@@ -47,7 +51,7 @@ const Header = () => {
     return (
         <div>
             <Navbar color='light' light expand='md' container='fluid' >
-                <NavbarBrand href="/">Simple Blog</NavbarBrand>
+                <NavbarBrand>Simple Blog</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="me-auto" navbar>
@@ -59,6 +63,7 @@ const Header = () => {
                     </Nav>
 
                 </Collapse>
+                <NavbarBrand>{name}</NavbarBrand>
             </Navbar>
         </div>
     )

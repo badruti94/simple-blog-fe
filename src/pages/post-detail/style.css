@@ -1,0 +1,28 @@
+.post-side-menu-wrapper{
+    position: fixed;
+    height: 75%;
+    z-index: 1;
+}
+
+.post-side-menu-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 1250px) {
+    .post-side-menu-wrapper{
+        position: fixed;
+        width: 75%;
+        left: 12%;
+        bottom: 0;
+        height: fit-content;
+    }
+    .post-side-menu{
+        justify-content: center;
+    }
+    .post-side-menu-list{
+        display: flex;
+        flex-direction: row;
+    }
+}
