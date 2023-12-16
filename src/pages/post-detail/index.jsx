@@ -47,7 +47,7 @@ const PostDetail = () => {
     useEffect(() => {
         const incrementView = async () => {
             try {
-                await API.patch(`/post/${id}/view`)
+                API.patch(`/post/${id}/view`, {})
             } catch (error) {
                 console.log(error);
             }
