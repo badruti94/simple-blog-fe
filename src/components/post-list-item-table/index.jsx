@@ -4,9 +4,14 @@ import { Button } from "reactstrap"
 import { confirmAlert } from 'react-confirm-alert';
 import { API, getConfig } from "../../config/api"
 import {formatDate} from '../../utils/format'
+import { useDispatch, useSelector } from 'react-redux';
+import { getData } from '../../config/redux/slice/postSlice';
 
-const PostListItemTable = ({ data, getData }) => {
+const PostListItemTable = ({ data }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { page, perPage } = useSelector(state => state.pagination)
+
 
     const { id, title, view, createdAt, publish } = data
     const handleEdit = async () => {
@@ -21,7 +26,7 @@ const PostListItemTable = ({ data, getData }) => {
             const deleteItem = async () => {
                 const config = await getConfig()
                 const result = await API.delete('/post/' + id, config)
-                getData()
+                dispatch(getData({page, perPage}))
             }
 
             const options = {

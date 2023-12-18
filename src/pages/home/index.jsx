@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { Card } from 'reactstrap'
 import Layout from "../../components/layout"
-import { API } from "../../config/api"
-import { SwalLoading } from '../../utils/swal-fire'
 import PostListItem from "../../components/post-list-item"
-import { updatePage, updateTotalData } from "../../config/redux/action"
 import PaginationComponent from "../../components/pagination"
 import SearchForm from '../../components/searchForm'
+import { updatePage } from "../../config/redux/slice/paginationSlice"
+import { getData } from "../../config/redux/slice/homeSlice"
 
 
 const Home = () => {
   const dispatch = useDispatch()
-  const [posts, setPosts] = useState([])
-  const [search, setSearch] = useState('')
-  const { page, perPage } = useSelector(state => state.paginationReducer)
-
-  const getData = async () => {
-    const Swal = SwalLoading()
-    const result = await API.get(`/post?page=${page}&perPage=${perPage}&search=${search}`)
-    Swal.close()
-    setPosts(result.data.data)
-    dispatch(updateTotalData(parseInt(result.data.total_data)))
-  }
+  const {posts, search} = useSelector(state => state.home)
+  const { page, perPage } = useSelector(state => state.pagination)
 
   useEffect(() => {
     return () => {
@@ -32,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     try {
-      getData()
+      dispatch(getData({page, perPage, search}))
     } catch (error) {
       console.log(error);
     }
@@ -45,11 +35,7 @@ const Home = () => {
         style={{ maxWidth: '800px' }}
       >
 
-        <SearchForm
-          search={search}
-          setSearch={setSearch}
-          getData={getData}
-        />
+        <SearchForm />
       </Card>
 
       {

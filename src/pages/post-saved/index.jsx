@@ -4,13 +4,13 @@ import Layout from "../../components/layout"
 import { API, getConfig } from "../../config/api"
 import { SwalLoading } from '../../utils/swal-fire'
 import PostListItem from "../../components/post-list-item"
-import { updatePage, updateTotalData } from "../../config/redux/action"
 import PaginationComponent from "../../components/pagination"
+import { updatePage, updateTotalData } from "../../config/redux/slice/paginationSlice"
 
 const PostSaved = () => {
     const dispatch = useDispatch()
     const [posts, setPosts] = useState([])
-    const { page, perPage } = useSelector(state => state.paginationReducer)
+    const { page, perPage } = useSelector(state => state.pagination)
 
     const getData = async () => {
         const Swal = SwalLoading()

@@ -1,15 +1,17 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, CardBody, Form, Input } from 'reactstrap'
-import { updatePage } from '../../config/redux/action'
+import { updatePage } from '../../config/redux/slice/paginationSlice'
+import { getData, setSearch } from '../../config/redux/slice/homeSlice'
 
-const SearchForm = (props) => {
-    const { search, setSearch, getData } = props
+const SearchForm = () => {
+    const { search } = useSelector(state => state.home)
+    const { page, perPage } = useSelector(state => state.pagination)
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(updatePage(1))
-        getData()
+        dispatch(getData({ page, perPage, search }))
     }
 
     return (
@@ -21,9 +23,9 @@ const SearchForm = (props) => {
                         name="search"
                         placeholder="Search....."
                         type="text"
-                        
+
                         value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => dispatch(setSearch(e.target.value))}
                     />
                     <Button type='submit'>
                         Search

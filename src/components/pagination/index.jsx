@@ -1,12 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { PaginationItem, Pagination, PaginationLink } from 'reactstrap'
-import { updatePage } from '../../config/redux/action'
+import { updatePage } from '../../config/redux/slice/paginationSlice'
 
 
 const PaginationComponent = () => {
     const dispatch = useDispatch()
-    const { page, perPage, totalData } = useSelector(state => state.paginationReducer)
+    const { page, perPage, totalData } = useSelector(state => state.pagination)
     const totalPage = Math.ceil(parseInt(totalData) / parseInt(perPage))
 
     const handleFirst = () => {

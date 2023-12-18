@@ -1,8 +1,8 @@
 import { Provider } from 'react-redux'
 import Routes from '../src/routes'
-import store from '../src/config/redux/store'
 import logo from './logo.svg';
 import './App.css';
+import { store } from './config/redux/store';
 
 function App() {
   return (

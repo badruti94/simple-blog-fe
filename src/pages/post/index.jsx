@@ -1,26 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import { Card, CardBody, Table } from "reactstrap"
 import { useDispatch, useSelector } from "react-redux"
 import PaginationComponent from "../../components/pagination"
 import Layout from "../../components/layout"
-import { SwalLoading } from "../../utils/swal-fire"
-import { API, getConfig } from "../../config/api"
-import { updatePage, updateTotalData } from "../../config/redux/action"
 import PostListItemTable from "../../components/post-list-item-table"
+import { updatePage } from "../../config/redux/slice/paginationSlice"
+import { getData } from "../../config/redux/slice/postSlice"
 
 const Post = () => {
     const dispatch = useDispatch()
-    const [posts, setPosts] = useState([])
-    const { page, perPage } = useSelector(state => state.paginationReducer)
-
-    const getData = async () => {
-        const Swal = SwalLoading()
-        const config  = await getConfig()
-        const result = await API.get(`/post/dashboard?page=${page}&perPage=${perPage}`, config)
-        Swal.close()
-        setPosts(result.data.data)
-        dispatch(updateTotalData(parseInt(result.data.total_data)))
-    }
+    const {posts} = useSelector(state => state.post)
+    const { page, perPage } = useSelector(state => state.pagination)
 
     useEffect(() => {
         return () => {
@@ -30,7 +20,7 @@ const Post = () => {
 
     useEffect(() => {
         try {
-            getData()
+            dispatch(getData({page, perPage}))
         } catch (error) {
             console.log(error);
         }
